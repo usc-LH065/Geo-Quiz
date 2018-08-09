@@ -1,5 +1,6 @@
 package com.bignerdranch.android.geoquiz;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -42,7 +43,7 @@ public class CheatActivity extends AppCompatActivity {
     private void setAnswerShownResult(boolean isAnswerShown) {
         Intent data = new Intent();
         data.putExtra(EXTRA_ANSWER_SHOWN, isAnswerShown);
-        setResult(RESULT_OK,data);
+        setResult(Activity.RESULT_OK,data);
 //        finish();
     }
 

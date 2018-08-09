@@ -27,9 +27,9 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
-
         if(savedInstanceState != null){
-            mCurrentIndex = savedInstanceState.getInt("INDEX",0);
+            mCurrentIndex = savedInstanceState.getInt("INDEX");
+            Toast.makeText(this,"start New activity " +mCurrentIndex, Toast.LENGTH_SHORT).show();
         }
         mQuestionBank = new Question[5];
         mQuestionBank[0] = new Question("Paraguay is in Africa", false);
@@ -45,8 +45,7 @@ public class QuizActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Toast.makeText(QuizActivity.this, R.string.correct_toast, Toast.LENGTH_SHORT).show();
-                mCurrentIndex = 0;
+                checkAnswer(true);
             }
         });
         mFalseButton = findViewById(R.id.false_button);
@@ -54,8 +53,7 @@ public class QuizActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Toast.makeText(QuizActivity.this, R.string.incorrect_toast, Toast.LENGTH_SHORT).show();
-                mCurrentIndex = 1;
+                checkAnswer(false);
             }
         });
         mNextButton = findViewById(R.id.next_button);
@@ -100,11 +98,12 @@ public class QuizActivity extends AppCompatActivity {
         if(resultCode != Activity.RESULT_OK){
             return;
         }
-        if(resultCode == REQUSET_CODE_CHEAT) {
+        if(requestCode == REQUSET_CODE_CHEAT) {
             if(data==null){
                 return;
             }
             mIsCheater = CheatActivity.wasAnswerShown(data);
+            Toast.makeText(this, mIsCheater + "", Toast.LENGTH_SHORT).show();
         }
     }
     private void checkAnswer(boolean userPressedTrue){
@@ -120,11 +119,11 @@ public class QuizActivity extends AppCompatActivity {
                 messageResId = R.string.incorrect_toast;
             }
         }
-        Toast.makeText(this, messageResId, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+
         super.onSaveInstanceState(outState, outPersistentState);
         outState.putInt("INDEX",mCurrentIndex);
         Toast.makeText(this,"save instance", Toast.LENGTH_SHORT).show();
